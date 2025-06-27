@@ -164,7 +164,7 @@ function resetCompressionState() {
   downloadAllBtn.style.display = 'none';
 }
 
-compressAllBtn.onclick = async () => {
+async function compressAllImages() {
   if (files.length === 0) {
     showGlobalTip('请先选择图片');
     return;
@@ -173,46 +173,59 @@ compressAllBtn.onclick = async () => {
   downloadAllBtn.style.display = 'none';
   compressedResults = [];
   let anySuccess = false;
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const card = previewList.children[i];
-    const tip = card.querySelector('.tip');
-    tip.style.display = 'none';
-    try {
-      const res = await compressImage(file, currentQuality/100, currentFormat);
-      compressedResults.push(res);
-      const ratio = res.size / file.size;
-      if (ratio >= 0.98) {
-        card.querySelector('.result').textContent = '压缩效果有限';
-        tip.textContent = '压缩后文件未明显变小，建议尝试更低质量或更换输出格式';
-        tip.style.display = '';
-      } else {
-        card.querySelector('.result').textContent = `压缩后: ${(res.size/1024).toFixed(1)} KB (节省${((1-res.size/file.size)*100).toFixed(0)}%)`;
-        tip.style.display = 'none';
-        anySuccess = true;
-      }
-      card.querySelector('img').src = res.url;
-    } catch (e) {
-      card.querySelector('.result').textContent = '压缩失败';
-      tip.textContent = '压缩过程中发生错误';
-      tip.style.display = '';
+  const formData = new FormData();
+  files.forEach(file => formData.append('files', file));
+  formData.append('targetFormat', currentFormat.replace('image/', ''));
+  try {
+    const res = await fetch('http://localhost:3001/api/format-convert', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      data.results.forEach((item, i) => {
+        if (item.url) {
+          compressedResults[i] = {
+            url: 'http://localhost:3001' + item.url,
+            name: item.name
+          };
+          const card = previewList.children[i];
+          card.querySelector('.result').textContent = '压缩完成';
+          card.querySelector('img').src = 'http://localhost:3001' + item.url;
+          anySuccess = true;
+        } else {
+          const card = previewList.children[i];
+          card.querySelector('.result').textContent = '压缩失败';
+          card.querySelector('.tip').textContent = item.error || '压缩失败';
+          card.querySelector('.tip').style.display = '';
+        }
+      });
+    } else {
+      showGlobalTip(data.error || '压缩失败');
     }
+  } catch (e) {
+    showGlobalTip('网络错误或服务器异常');
   }
   if (anySuccess) {
     downloadAllBtn.style.display = '';
     hideGlobalTip();
   } else {
     downloadAllBtn.style.display = 'none';
-    showGlobalTip('所有图片均未明显变小，建议尝试更低质量或更换输出格式');
+    showGlobalTip('所有图片均压缩失败');
   }
   compressAllBtn.disabled = false;
-};
+}
+compressAllBtn.onclick = compressAllImages;
 
 downloadAllBtn.onclick = () => {
   compressedResults.forEach((res, i) => {
-    console.log('下载', res);
-    if (res && res.size < files[i].size * 0.98 && res.blob) {
-      saveAs(res.blob, res.name);
+    if (res && res.url) {
+      const a = document.createElement('a');
+      a.href = res.url;
+      a.download = res.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
   });
 };

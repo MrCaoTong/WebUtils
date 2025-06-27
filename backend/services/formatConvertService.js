@@ -17,13 +17,19 @@ async function batchConvertFiles(files, targetFormat) {
   for (const file of files) {
     let url = '', name = '';
     try {
+      const ext = getExt(file.originalname);
       if ([
         'pdf','doc','docx','ppt','pptx','xls','xlsx','txt','rtf','html','epub'
-      ].includes(getExt(file.originalname))) {
+      ].includes(ext)) {
         ({ url, name } = await convertDocument(file, targetFormat));
         console.log('输出文件名', name);
+      } else if ([
+        'jpg','jpeg','png','bmp','webp'
+      ].includes(ext)) {
+        ({ url, name } = await convertImage(file, targetFormat));
+        console.log('输出图片文件名', name);
       } else {
-        throw new Error('仅支持文档类型文件:pdf, doc, docx, ppt, pptx, xls, xlsx, txt, rtf, html, epub');
+        throw new Error('仅支持文档或图片类型文件');
       }
       results.push({ url, name });
     } catch (e) {
@@ -35,8 +41,11 @@ async function batchConvertFiles(files, targetFormat) {
 
 // 图片格式转换
 async function convertImage(file, targetFormat) {
-  const baseName = path.parse(file.originalname).name;
-  const outputName = `${baseName}_converted.${targetFormat}`;
+  const supportedFormats = ['jpeg','jpg','png','webp','gif','tiff','avif','heic','jp2','jxl'];
+  if (!supportedFormats.includes(targetFormat)) {
+    throw new Error('不支持的图片输出格式');
+  }
+  const outputName = `${Date.now()}_${uuidv4()}.${targetFormat}`;
   const outputPath = path.join(__dirname, '../../outputs', outputName);
   await sharp(file.path).toFormat(targetFormat).toFile(outputPath);
   return { url: `/outputs/${outputName}`, name: outputName };
