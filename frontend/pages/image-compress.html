@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片压缩 - 常用工具网站</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/image-compress.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="logo">常用工具网</div>
+      <nav class="main-nav">
+        <a href="../index.html">首页</a>
+        <a href="file-convert.html">文件转换</a>
+        <a href="image-compress.html" class="active">图片压缩</a>
+        <a href="image-crop.html">图片裁剪</a>
+        <a href="format-convert.html">格式转换</a>
+        <a href="watermark.html">图片水印</a>
+      </nav>
+    </div>
+  </header>
+  <main class="compress-main">
+    <section class="compress-banner">
+      <h1>图片压缩工具</h1>
+      <p>智能压缩图片，在保持视觉质量的同时大幅减小文件大小</p>
+    </section>
+    <section class="compress-panel">
+      <div class="upload-area" id="uploadArea">
+        <input type="file" id="fileElem" multiple accept="image/*" style="display:none">
+        <label for="fileElem" class="upload-label">拖拽图片到此处或点击选择图片（支持批量）</label>
+      </div>
+      <div class="compress-settings">
+        <div class="quality-row">
+          <label class="quality-label">压缩质量：
+            <input type="range" id="qualityRange" min="10" max="100" value="80">
+            <span id="qualityValue">80%</span>
+          </label>
+          <div class="quality-presets">
+            <button data-q="30">低质量</button>
+            <button data-q="60">中等</button>
+            <button data-q="80" class="active">高质量</button>
+          </div>
+        </div>
+        <div class="format-row">
+          <label>输出格式：
+            <select id="outputFormat">
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WebP</option>
+              <option value="image/bmp">BMP</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div id="file-list" class="file-list"></div>
+      <div id="preview-list" class="preview-list"></div>
+      <div class="btn-group">
+        <button id="compressAllBtn" class="btn-primary">压缩</button>
+        <button id="downloadAllBtn" class="btn-primary" style="display:none">下载</button>
+      </div>
+      <div id="global-tip" class="global-tip" style="display:none"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      © 2024 常用工具网站 - 让工作更简单
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <script src="../js/image-compress.js"></script>
+</body>
+</html> 

@@ -108,4 +108,21 @@
   background: #e0e7ef;
   border-radius: 4px;
   padding: 2px 8px;
+}
+#mergePdfBtn {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.2s;
+}
+#mergePdfBtn:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
 } 

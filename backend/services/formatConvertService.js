@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const sharp = require('sharp');
 const ffmpeg = require('fluent-ffmpeg');
+const { v4: uuidv4 } = require('uuid');
+const { execSync } = require('child_process');
 // 这里可引入 LibreOffice/unoconv/pdf-lib/mammoth 等
 
 // 工具函数：获取文件扩展名
@@ -13,15 +15,15 @@ function getExt(filename) {
 async function batchConvertFiles(files, targetFormat) {
   const results = [];
   for (const file of files) {
-    const ext = getExt(file.originalname);
     let url = '', name = '';
     try {
       if ([
         'pdf','doc','docx','ppt','pptx','xls','xlsx','txt','rtf','html','epub'
-      ].includes(ext)) {
+      ].includes(getExt(file.originalname))) {
         ({ url, name } = await convertDocument(file, targetFormat));
+        console.log('输出文件名', name);
       } else {
-        throw new Error('仅支持文档类型文件：pdf, doc, docx, ppt, pptx, xls, xlsx, txt, rtf, html, epub');
+        throw new Error('仅支持文档类型文件:pdf, doc, docx, ppt, pptx, xls, xlsx, txt, rtf, html, epub');
       }
       results.push({ url, name });
     } catch (e) {
@@ -56,10 +58,18 @@ function convertMedia(file, targetFormat) {
 
 // 文档格式转换（这里只做文件复制示例，实际应集成LibreOffice等）
 async function convertDocument(file, targetFormat) {
+  const outputDir = path.join(__dirname, '../../outputs');
+  // 使用 LibreOffice 进行格式转换
+  execSync(`soffice --headless --convert-to ${targetFormat} --outdir "${outputDir}" "${file.path}"`);
+  // 查找 outputs 目录下最新生成的目标文件
   const baseName = path.parse(file.originalname).name;
-  const outputName = `${baseName}_converted.${targetFormat}`;
-  const outputPath = path.join(__dirname, '../../outputs', outputName);
-  fs.copyFileSync(file.path, outputPath);
+  // 兼容拼音/uuid命名，查找 outputs 目录下最新的目标格式文件
+  const files = fs.readdirSync(outputDir)
+    .filter(f => f.endsWith('.' + targetFormat))
+    .map(f => ({ name: f, time: fs.statSync(path.join(outputDir, f)).mtime.getTime() }))
+    .sort((a, b) => b.time - a.time);
+  if (!files.length) throw new Error('转换失败，未生成目标文件');
+  const outputName = files[0].name;
   return { url: `/outputs/${outputName}`, name: outputName };
 }
 

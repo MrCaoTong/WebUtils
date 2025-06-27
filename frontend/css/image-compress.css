@@ -1,0 +1,229 @@
+.compress-main {
+  background: #f7f9fb;
+  min-height: 80vh;
+  padding: 32px 0 48px 0;
+}
+.compress-banner {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.compress-banner h1 {
+  color: #2563eb;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.compress-banner p {
+  color: #555;
+  font-size: 1.1rem;
+}
+.compress-panel {
+  background: #fff;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(37,99,235,0.10);
+  padding: 28px 20px 20px 20px;
+}
+.upload-area {
+  border: 2px dashed #2563eb;
+  border-radius: 16px;
+  background: #f0f6ff;
+  padding: 28px 0;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+.upload-area.dragover {
+  border-color: #1d4ed8;
+}
+.upload-label {
+  color: #2563eb;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: block;
+  user-select: none;
+}
+#fileElem {
+  display: none;
+}
+.compress-settings {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+  max-width: 100%;
+}
+.quality-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 100%;
+}
+.quality-row label {
+  font-size: 1.08em;
+  color: #333;
+  margin-bottom: 0;
+}
+.quality-presets {
+  display: flex;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+.quality-presets button {
+  margin: 0 4px;
+  padding: 4px 14px;
+  border: 1px solid #2563eb;
+  background: #fff;
+  color: #2563eb;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.98em;
+  transition: background 0.2s, color 0.2s;
+}
+.quality-presets button.active,
+.quality-presets button:hover {
+  background: #2563eb;
+  color: #fff;
+}
+.format-row {
+  margin-top: 4px;
+}
+.format-row label {
+  font-size: 1.08em;
+  color: #333;
+}
+#outputFormat {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  outline: none;
+  margin-left: 8px;
+}
+.file-list {
+  margin: 10px 0 16px 0;
+  padding: 6px 10px;
+  background: #f8fafc;
+  border-radius: 8px;
+  color: #2563eb;
+  font-size: 0.98rem;
+  min-height: 24px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.file-list .file-item {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 4px;
+  background: #e0e7ef;
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: #2563eb;
+}
+.preview-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 14px 0 8px 0;
+  justify-content: flex-start;
+}
+.preview-card {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 8px 10px 12px 10px;
+  width: 150px;
+  text-align: center;
+  position: relative;
+}
+.preview-card img {
+  max-width: 110px;
+  max-height: 80px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  background: #e5e7eb;
+}
+.preview-card .info {
+  font-size: 0.95em;
+  color: #555;
+  margin-bottom: 4px;
+}
+.preview-card .result {
+  color: #2563eb;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.preview-card .tip {
+  color: #e11d48;
+  font-size: 0.95em;
+  margin-bottom: 4px;
+}
+.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+.btn-primary {
+  width: 80%;
+  max-width: 320px;
+  margin: 20px auto 0 auto;
+  display: block;
+  font-size: 1.1rem;
+  border-radius: 24px;
+  padding: 12px 0;
+}
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: #e11d48;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.delete-btn:hover {
+  color: #b91c1c;
+}
+.global-tip {
+  color: #e11d48;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin: 12px auto 0 auto;
+  max-width: 500px;
+  text-align: center;
+  font-size: 1em;
+  display: block;
+}
+.quality-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.08em;
+  color: #333;
+  margin-bottom: 0;
+  flex: 1 1 auto;
+}
+#qualityRange {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+#qualityValue {
+  min-width: 38px;
+  color: #2563eb;
+  font-weight: 500;
+} 
