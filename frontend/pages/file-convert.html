@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文件批量转换 - 常用工具网站</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/file-convert.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-container">
+      <div class="logo">常用工具网</div>
+      <nav class="main-nav">
+        <a href="../index.html">首页</a>
+        <a href="file-convert.html" class="active">文件转换</a>
+        <a href="image-compress.html">图片压缩</a>
+        <a href="image-crop.html">图片裁剪</a>
+        <a href="format-convert.html">格式转换</a>
+        <a href="watermark.html">图片水印</a>
+      </nav>
+    </div>
+  </header>
+  <main class="convert-main">
+    <section class="convert-banner">
+      <h1>批量文件格式转换</h1>
+      <p>支持文档、图片、音视频等多类型文件的批量格式互转</p>
+    </section>
+    <section class="convert-panel">
+      <form id="convertForm">
+        <div class="upload-area" id="uploadArea">
+          <input type="file" id="fileInput" name="files" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.rtf,.html,.epub" />
+          <label for="fileInput" class="upload-label">拖拽或点击选择文档（支持批量）</label>
+        </div>
+        <div id="fileList" class="file-list"></div>
+        <div class="target-format-group">
+          <label for="targetFormat">目标格式：</label>
+          <select id="targetFormat" name="targetFormat">
+            <option value="pdf">PDF</option>
+            <option value="docx">Word(DOCX)</option>
+            <option value="pptx">PPTX</option>
+            <option value="txt">TXT</option>
+            <option value="rtf">RTF</option>
+            <option value="html">HTML</option>
+            <option value="epub">EPUB</option>
+            <option value="xlsx">Excel(XLSX)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary">开始转换</button>
+      </form>
+      <div id="progressArea" class="progress-area" style="display:none;"></div>
+      <div id="resultArea" class="result-area"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      © 2024 常用工具网站 - 让工作更简单
+    </div>
+  </footer>
+  <script src="../js/file-convert.js"></script>
+</body>
+</html> 
