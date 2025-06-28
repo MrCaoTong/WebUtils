@@ -1,0 +1,198 @@
+/* 蓝白卡片风格，顶部导航，按钮，裁剪区，预览区等样式 */
+.crop-main { background: #f7f9fb; min-height: 80vh; padding: 32px 0 48px 0; margin-top: 32px; }
+.crop-banner { text-align: center; margin-bottom: 32px; }
+.crop-banner h1 { color: #2563eb; font-size: 2.2rem; font-weight: 700; margin-bottom: 12px; }
+.crop-banner p { color: #555; font-size: 1.1rem; }
+.crop-panel { background: #fff; max-width: 700px; margin: 0 auto; border-radius: 24px; box-shadow: 0 4px 24px rgba(37,99,235,0.10); padding: 28px 20px 20px 20px; }
+.step { margin-bottom: 32px; }
+.upload-area { border: 2px dashed #2563eb; border-radius: 16px; background: #f0f6ff; padding: 28px 0; text-align: center; margin-bottom: 20px; position: relative; transition: border-color 0.2s; cursor: pointer; }
+.upload-area.dragover { border-color: #1d4ed8; }
+.upload-label { color: #2563eb; font-size: 1.1rem; cursor: pointer; display: block; user-select: none; }
+#fileElem { display: none; }
+#selectBtn { margin-top: 12px; background: #2563eb; color: #fff; border: none; border-radius: 8px; padding: 8px 24px; font-size: 1rem; cursor: pointer; }
+#selectBtn:hover { background: #1d4ed8; }
+.file-list { margin: 10px 0 16px 0; padding: 6px 10px; background: #f8fafc; border-radius: 8px; color: #2563eb; font-size: 0.98rem; min-height: 24px; width: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
+.crop-container { display: flex; flex-direction: column; align-items: center; }
+#cropCanvas { border: 1.5px solid #2563eb; border-radius: 8px; background: #e5e7eb; margin-bottom: 12px; max-width: 100%; max-height: 400px; }
+.crop-tools { display: flex; gap: 12px; margin-bottom: 8px; align-items: center; }
+.crop-tools label { font-size: 1.08em; color: #333; }
+#aspectRatio, #customW, #customH { margin-left: 6px; }
+#rotateBtn, #flipBtn, #resetBtn { background: #2563eb; color: #fff; border: none; border-radius: 6px; padding: 6px 16px; font-size: 1em; cursor: pointer; }
+#rotateBtn:hover, #flipBtn:hover, #resetBtn:hover { background: #1d4ed8; }
+.preview-row { display: flex; gap: 32px; justify-content: center; margin-bottom: 18px; }
+.preview-img { border-radius: 8px; background: #e5e7eb; max-width: 220px; max-height: 180px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.output-settings { display: flex; gap: 24px; align-items: center; justify-content: center; margin-bottom: 16px; }
+#outputFormat, #qualityRange { margin-left: 8px; }
+#cropDownloadBtn, #batchCropBtn { background: #2563eb; color: #fff; border: none; border-radius: 20px; padding: 10px 32px; font-size: 1.08em; margin: 0 8px; cursor: pointer; }
+#cropDownloadBtn:hover, #batchCropBtn:hover { background: #1d4ed8; }
+.global-tip { color: #e11d48; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 8px 16px; margin: 12px auto 0 auto; max-width: 500px; text-align: center; font-size: 1em; display: block; }
+
+/* 导航栏样式优化，参照文件转换和图片压缩页面 */
+.navbar {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.04);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.nav-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.logo {
+  font-size: 1.5rem;
+  color: #2563eb;
+  font-weight: bold;
+}
+.navbar nav {
+  display: flex;
+  gap: 28px;
+}
+.navbar nav a {
+  color: #2563eb;
+  font-size: 1.08rem;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.navbar nav a.active, .navbar nav a:hover {
+  background: #e0e7ef;
+}
+
+/* 文件列表项样式 */
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.file-item span:first-child {
+  flex: 1;
+  color: #374151;
+  font-weight: 500;
+}
+
+.file-item span:nth-child(2) {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.file-item button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.file-item button:hover {
+  background: #1d4ed8;
+}
+
+/* 裁剪按钮样式 */
+.crop-action-btn {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background 0.2s;
+}
+
+.crop-action-btn:hover {
+  background: #059669;
+}
+
+/* 提示信息样式 */
+.global-tip.success {
+  color: #059669;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.global-tip.info {
+  color: #2563eb;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.global-tip.error {
+  color: #dc2626;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+/* 自定义比例输入框样式 */
+#customRatioBox {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+#customRatioBox input {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+}
+
+/* 质量滑块样式 */
+#qualityRange {
+  width: 100px;
+}
+
+/* 预览区域样式优化 */
+.preview-row > div {
+  text-align: center;
+}
+
+.preview-row > div > div:first-child {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .crop-panel {
+    margin: 0 16px;
+    padding: 20px 16px;
+  }
+  
+  .crop-tools {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .preview-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .output-settings {
+    flex-direction: column;
+    gap: 12px;
+  }
+} 

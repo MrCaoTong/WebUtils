@@ -4,6 +4,7 @@ const path = require('path');
 const convertRouter = require('./routes/convert');
 const formatConvertRouter = require('./routes/formatConvert');
 const mergeRouter = require('./routes/merge');
+const imageCropRouter = require('./routes/imageCrop');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/outputs', express.static(path.join(__dirname, '../outputs')));
 app.use('/api/convert', convertRouter);
 app.use('/api/format-convert', formatConvertRouter);
 app.use('/api/merge', mergeRouter);
+app.use('/api/image-crop', imageCropRouter);
 
 // 启动服务
 const PORT = 3001;
